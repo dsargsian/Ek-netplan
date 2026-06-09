@@ -174,6 +174,23 @@ class NetzplanTest {
         assertThrows(IllegalArgumentException.class, netzplan::calcPath);
     }
 
+    @Test
+    @DisplayName("TC09 [ÄK9] – Indirekter Zirkelbezug löst IllegalArgumentException aus")
+    void tc09_indirekterZirkelbezugWirftException() {
+        Knoten a = new Knoten(1, "A", 2);
+        Knoten b = new Knoten(2, "B", 3);
+        Knoten c = new Knoten(3, "C", 4);
+
+        b.addPredecessor(a);
+        c.addPredecessor(b);
+        a.addPredecessor(c);
+
+        Netzplan netzplan = createNetzplan(a, b, c);
+
+        assertThrows(IllegalArgumentException.class, netzplan::calcPath);
+    }
+
+
 
 
 }
