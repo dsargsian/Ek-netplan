@@ -97,5 +97,21 @@ class NetzplanTest {
         assertThrows(IllegalArgumentException.class, netzplan::calcPath);
     }
 
+    @Test
+    @DisplayName("TC04 [ÄK4] – Einzelner Knoten ist Start- und Endknoten")
+    void tc04_einzelnerKnotenIstStartUndEndknoten() {
+        Knoten a = new Knoten(1, "A", 7);
+
+        Netzplan netzplan = createNetzplan(a);
+
+        assertDoesNotThrow(netzplan::calcPath);
+
+        List<Knoten> pfad = netzplan.criticalPath();
+
+        assertEquals(1, pfad.size());
+        assertSame(a, pfad.get(0));
+        assertEquals(7L, netzplan.getDuration());
+    }
+
 
 }
