@@ -190,7 +190,32 @@ class NetzplanTest {
         assertThrows(IllegalArgumentException.class, netzplan::calcPath);
     }
 
+    @Test
+    @DisplayName("TC10 [ÄK10] – Reihenfolge der Knoteneingabe beeinflusst das Ergebnis nicht")
+    void tc10_eingabereihenfolgeOhneEinflussAufErgebnis() {
+        linearerNetzplan.calcPath();
 
+        Netzplan rueckwaerts = linearerNetzplanUmgekehrt();
+        rueckwaerts.calcPath();
+
+        assertEquals(
+                linearerNetzplan.getDuration(),
+                rueckwaerts.getDuration()
+        );
+
+        List<Knoten> pfad1 = linearerNetzplan.criticalPath();
+        List<Knoten> pfad2 = rueckwaerts.criticalPath();
+
+        assertEquals(pfad1.size(), pfad2.size());
+
+        for (int i = 0; i < pfad1.size(); i++) {
+            assertEquals(pfad1.get(i).getName(), pfad2.get(i).getName());
+            assertEquals(pfad1.get(i).getFaz(), pfad2.get(i).getFaz());
+            assertEquals(pfad1.get(i).getFez(), pfad2.get(i).getFez());
+            assertEquals(pfad1.get(i).getSaz(), pfad2.get(i).getSaz());
+            assertEquals(pfad1.get(i).getSez(), pfad2.get(i).getSez());
+        }
+    }
 
 
 }
