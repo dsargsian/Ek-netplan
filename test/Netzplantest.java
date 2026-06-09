@@ -163,6 +163,16 @@ class NetzplanTest {
         assertEquals(10L, netzplan.getDuration());
     }
 
+    @Test
+    @DisplayName("TC08 [ÄK8] – Direkter Zirkelbezug löst IllegalArgumentException aus")
+    void tc08_direkterZirkelbezugWirftException() {
+        Knoten a = new Knoten(1, "A", 5);
+        a.addPredecessor(a);
+
+        Netzplan netzplan = createNetzplan(a);
+
+        assertThrows(IllegalArgumentException.class, netzplan::calcPath);
+    }
 
 
 
