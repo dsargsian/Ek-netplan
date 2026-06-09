@@ -60,6 +60,29 @@ class NetzplanTest {
         Knoten letzter = pfad.get(pfad.size() - 1);
         assertTrue(letzter.getSuccessors().isEmpty());
     }
+    @Test
+    @DisplayName("TC01 [ÄK1] – Gesamtdauer eines linearen Netzplans beträgt 10")
+    void tc01_gesamtdauerLinearerNetzplan() {
+        linearerNetzplan.calcPath();
+
+        assertEquals(10L, linearerNetzplan.getDuration());
+    }
+
+    @Test
+    @DisplayName("TC02 [ÄK2] – Zwei Startknoten lösen IllegalArgumentException aus")
+    void tc02_zweiStartknotenWerfenException() {
+        Knoten a = new Knoten(1, "A", 3);
+        Knoten b = new Knoten(2, "B", 4);
+        Knoten c = new Knoten(3, "C", 2);
+
+        c.addPredecessor(a);
+        c.addPredecessor(b);
+
+        Netzplan netzplan = createNetzplan(a, b, c);
+
+        assertThrows(IllegalArgumentException.class, netzplan::calcPath);
+    }
+
 
 
 }
