@@ -112,6 +112,15 @@ class NetzplanTest {
         assertSame(a, pfad.get(0));
         assertEquals(7L, netzplan.getDuration());
     }
+    @Test
+    @DisplayName("TC05 [ÄK5] – Leerer Netzplan löst IllegalArgumentException aus")
+    void tc05_leererNetzplanWirftException() {
+        Netzplan netzplan = new Netzplan();
+
+        assertThrows(IllegalArgumentException.class, netzplan::calcPath);
+    }
+
+
 
 
 }
