@@ -142,5 +142,28 @@ class NetzplanTest {
     }
 
 
+    @Test
+    @DisplayName("TC07 [ÄK7] – Knoten mit mehreren Nachfolgern wird korrekt berechnet")
+    void tc07_knotenMitMehrerenNachfolgern() {
+        Knoten a = new Knoten(1, "A", 4);
+        Knoten b = new Knoten(2, "B", 3);
+        Knoten c = new Knoten(3, "C", 6);
+        Knoten ende = new Knoten(4, "Ende", 0);
+
+        b.addPredecessor(a);
+        c.addPredecessor(a);
+        ende.addPredecessor(b);
+        ende.addPredecessor(c);
+
+        Netzplan netzplan = createNetzplan(a, b, c, ende);
+
+        assertDoesNotThrow(netzplan::calcPath);
+
+        assertEquals(2, a.getSuccessors().size());
+        assertEquals(10L, netzplan.getDuration());
+    }
+
+
+
 
 }
