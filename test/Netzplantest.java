@@ -82,7 +82,20 @@ class NetzplanTest {
 
         assertThrows(IllegalArgumentException.class, netzplan::calcPath);
     }
+    @Test
+    @DisplayName("TC03 [ÄK3] – Zwei Endknoten lösen IllegalArgumentException aus")
+    void tc03_zweiEndknotenWerfenException() {
+        Knoten a = new Knoten(1, "A", 3);
+        Knoten b = new Knoten(2, "B", 2);
+        Knoten c = new Knoten(3, "C", 4);
 
+        b.addPredecessor(a);
+        c.addPredecessor(a);
+
+        Netzplan netzplan = createNetzplan(a, b, c);
+
+        assertThrows(IllegalArgumentException.class, netzplan::calcPath);
+    }
 
 
 }
