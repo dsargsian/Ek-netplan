@@ -120,6 +120,26 @@ class NetzplanTest {
         assertThrows(IllegalArgumentException.class, netzplan::calcPath);
     }
 
+    @Test
+    @DisplayName("TC06 [ÄK6] – Knoten mit mehreren Vorgängern wird korrekt berechnet")
+    void tc06_knotenMitMehrerenVorgaengern() {
+        Knoten start = new Knoten(0, "Start", 0);
+        Knoten a = new Knoten(1, "A", 3);
+        Knoten b = new Knoten(2, "B", 5);
+        Knoten c = new Knoten(3, "C", 2);
+
+        a.addPredecessor(start);
+        b.addPredecessor(start);
+        c.addPredecessor(a);
+        c.addPredecessor(b);
+
+        Netzplan netzplan = createNetzplan(start, a, b, c);
+
+        assertDoesNotThrow(netzplan::calcPath);
+
+        assertEquals(2, c.getPredecessors().size());
+        assertEquals(5L, c.getFaz());
+    }
 
 
 
